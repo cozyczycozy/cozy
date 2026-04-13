@@ -793,6 +793,11 @@ body::after {
   .video-card { border-radius: 18px; }
   .play-btn { width: 68px; height: 68px; }
 }
+@media (max-width: 560px) {
+  .ai-section .sticker-1 { display: none; }
+  .ai-section .sticker-2 { width: 52px; bottom: 4%; left: 3%; }
+  .ai-section .doodle-bolt { width: 34px; top: 10%; right: 4%; }
+}
 
 /* ================================================================
    DESIGN / CAROUSEL
@@ -959,8 +964,12 @@ body::after {
 .slide-art.fan img:nth-child(3) { transform: translate(-50%,-50%) rotate(0deg); z-index: 2; }
 .slide-art.fan img:nth-child(4) { transform: translate(-50%,-50%) rotate(8deg) translateX(78px); }
 .slide-art.fan img:nth-child(5) { transform: translate(-50%,-50%) rotate(16deg) translateX(150px); }
-.slide-art.fan:hover img:nth-child(1) { transform: translate(-50%,-50%) rotate(-20deg) translateX(-200px); }
-.slide-art.fan:hover img:nth-child(5) { transform: translate(-50%,-50%) rotate(20deg) translateX(200px); }
+/* on hover the full fan spreads — all 5 cards splay out with stronger rotation */
+.slide-art.fan:hover img:nth-child(1) { transform: translate(-50%,-50%) rotate(-30deg) translateX(-140px); }
+.slide-art.fan:hover img:nth-child(2) { transform: translate(-50%,-50%) rotate(-15deg) translateX(-72px); }
+.slide-art.fan:hover img:nth-child(3) { transform: translate(-50%,-50%) rotate(0deg) scale(1.06); z-index: 3; }
+.slide-art.fan:hover img:nth-child(4) { transform: translate(-50%,-50%) rotate(15deg) translateX(72px); }
+.slide-art.fan:hover img:nth-child(5) { transform: translate(-50%,-50%) rotate(30deg) translateX(140px); }
 
 .slide-art.two-pages {
   display: flex;
@@ -1058,7 +1067,15 @@ body::after {
   gap: 28px;
 }
 @media (max-width: 860px) { .writing-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .writing-grid { grid-template-columns: 1fr; gap: 22px; } }
+@media (max-width: 560px) {
+  .writing-grid { grid-template-columns: 1fr; gap: 22px; }
+  /* flatten tilts in single-column stack — less visually jarring */
+  .write-card.tilt-1, .write-card.tilt-2, .write-card.tilt-3,
+  .write-card.tilt-4, .write-card.tilt-5 { transform: none; }
+  .write-card:hover { transform: translateY(-6px); }
+  /* 4:3 image is less overwhelming on small screens than full-width 1:1 */
+  .write-img { padding-top: 72%; }
+}
 
 .write-card {
   position: relative;
