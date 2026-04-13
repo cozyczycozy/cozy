@@ -1,0 +1,2014 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="曹泽宇 · 一个设计、写作、AI Coding 的学生自留地">
+<title>曹泽宇 · Hi, I'm Cozy</title>
+<link rel="preconnect" href="https://fonts.loli.net">
+<link rel="preconnect" href="https://gstatic.loli.net" crossorigin>
+<link href="https://fonts.loli.net/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400;1,9..144,600;1,9..144,800&family=Caprasimo&display=swap" rel="stylesheet">
+
+<style>
+/* ================================================================
+   BASE
+   ================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+:root {
+  /* Palette — warm collage, paper/clay */
+  --cream:       #FBF1D7;
+  --cream-deep:  #F5E3B5;
+  --paper:       #FFFBF0;
+  --yellow:      #FFCD3A;
+  --yellow-soft: #FFE79A;
+  --yellow-deep: #EEAE12;
+  --blue:        #6CB8DA;
+  --blue-soft:   #BDE2EF;
+  --blue-deep:   #3E93B9;
+  --pink:        #FFA3B9;
+  --pink-soft:   #FFCEDA;
+  --pink-deep:   #F2678B;
+  --coral:       #FF8260;
+  --mint:        #B3DBB3;
+  --lilac:       #D6BAE6;
+  --ink:         #2B2419;
+  --ink-soft:    #5C4B37;
+  --ink-mid:     #3D3122;
+
+  /* Type */
+  --ff-display: 'Fraunces', 'Times New Roman', Georgia, serif;
+  --ff-accent:  'Caprasimo', 'Fraunces', Georgia, serif;
+  --ff-cn:      'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei UI', 'Microsoft YaHei', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ff-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Shadows — clay-ish */
+  --sh-sticker: 0 1px 2px rgba(43,37,33,.08), 0 6px 16px -6px rgba(43,37,33,.18), 0 24px 38px -24px rgba(43,37,33,.35);
+  --sh-clay:    0 2px 0 rgba(43,37,33,.07), 0 10px 22px -12px rgba(43,37,33,.22), inset 0 2px 2px rgba(255,255,255,.7), inset 0 -3px 6px rgba(43,37,33,.1);
+  --sh-lift:    0 30px 60px -30px rgba(43,37,33,.45), 0 10px 20px -10px rgba(43,37,33,.15);
+  --sh-card:    0 1px 0 rgba(255,255,255,.6) inset, 0 -2px 0 rgba(43,37,33,.06) inset, 0 22px 40px -20px rgba(43,37,33,.25);
+}
+
+html, body { background: var(--cream); color: var(--ink); overflow-x: hidden; }
+body {
+  font-family: var(--ff-cn);
+  font-size: 16px;
+  line-height: 1.65;
+  letter-spacing: .005em;
+  min-height: 100vh;
+  background:
+    radial-gradient(1100px 720px at 8% -5%, #FFE79A55 0%, transparent 60%),
+    radial-gradient(900px 700px at 95% 12%, #FFD1DA55 0%, transparent 55%),
+    radial-gradient(1000px 800px at 60% 100%, #BDE2EF55 0%, transparent 60%),
+    var(--cream);
+  background-attachment: fixed;
+}
+
+img { max-width: 100%; display: block; -webkit-user-drag: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+/* Paper grain */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.92' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: .10;
+}
+
+/* ================================================================
+   SIDE NAV
+   ================================================================ */
+.side-nav {
+  position: fixed;
+  left: 28px; top: 50%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex; flex-direction: column;
+  gap: 14px;
+  padding: 18px 12px;
+  border-radius: 999px;
+  background: rgba(255,251,240,.62);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: 0 10px 30px -15px rgba(43,37,33,.22), inset 0 1px 0 rgba(255,255,255,.7);
+  border: 1px solid rgba(43,37,33,.06);
+}
+.side-nav a {
+  --dot: 10px;
+  position: relative;
+  width: var(--dot); height: var(--dot);
+  border-radius: 50%;
+  background: rgba(43,37,33,.18);
+  transition: background .35s ease, transform .35s ease;
+}
+.side-nav a:hover { background: var(--ink); transform: scale(1.25); }
+.side-nav a.active { background: var(--coral); transform: scale(1.25); }
+.side-nav a::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 24px; top: 50%;
+  transform: translateY(-50%) translateX(-6px);
+  padding: 5px 12px;
+  background: var(--ink);
+  color: var(--cream);
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 13px;
+  border-radius: 30px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .25s ease, transform .25s ease;
+}
+.side-nav a:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+
+@media (max-width: 860px) { .side-nav { display: none; } }
+
+/* ================================================================
+   LAYOUT / SECTION HEADER
+   ================================================================ */
+.section {
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 80px 56px 60px;
+}
+@media (max-width: 860px) {
+  .section { padding: 60px 22px 50px; }
+}
+
+.section-header {
+  display: flex;
+  align-items: baseline;
+  gap: 22px;
+  flex-wrap: wrap;
+  margin-bottom: 38px;
+  position: relative;
+}
+.section-number {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--ink-soft);
+  letter-spacing: .08em;
+}
+.section-title {
+  font-family: var(--ff-display);
+  font-weight: 800;
+  font-size: clamp(48px, 8vw, 108px);
+  line-height: .9;
+  letter-spacing: -.02em;
+  color: var(--ink);
+}
+.section-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--coral);
+}
+.section-zh {
+  font-family: var(--ff-cn);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink-soft);
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.55);
+  border: 1px dashed rgba(43,37,33,.25);
+}
+
+/* reveal on scroll */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity .9s cubic-bezier(.2,.8,.25,1), transform .9s cubic-bezier(.2,.8,.25,1); }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.d1 { transition-delay: .08s; }
+.reveal.d2 { transition-delay: .16s; }
+.reveal.d3 { transition-delay: .24s; }
+.reveal.d4 { transition-delay: .32s; }
+.reveal.d5 { transition-delay: .40s; }
+.reveal.d6 { transition-delay: .48s; }
+
+/* ================================================================
+   DOODLES (inline svg helpers) — shared styles
+   ================================================================ */
+.doodle { position: absolute; pointer-events: none; }
+@keyframes floaty  { 0%,100%{ transform: translateY(0) rotate(var(--r,0deg)); } 50%{ transform: translateY(-10px) rotate(calc(var(--r,0deg) + 4deg)); } }
+@keyframes twirl   { to { transform: rotate(360deg); } }
+@keyframes pulse   { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.08); } }
+@keyframes waveY   { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-8px); } }
+
+/* ================================================================
+   COVER
+   ================================================================ */
+.cover {
+  padding-top: 140px;
+  padding-bottom: 80px;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.cover-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 36px;
+  position: relative;
+  z-index: 2;
+  max-width: min(780px, 65%);
+}
+@media (max-width: 860px) { .cover-inner { max-width: 100%; } }
+
+.hello-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px 10px 14px;
+  background: var(--paper);
+  border-radius: 999px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  width: fit-content;
+  box-shadow: var(--sh-sticker);
+  transform: rotate(-2deg);
+  border: 1.5px solid rgba(43,37,33,.08);
+}
+.hello-badge .dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--coral);
+  box-shadow: 0 0 0 4px rgba(255,130,96,.22);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+.cover-title {
+  font-family: var(--ff-display);
+  font-weight: 800;
+  font-size: clamp(58px, 9vw, 138px);
+  line-height: .88;
+  letter-spacing: -.035em;
+  color: var(--ink);
+}
+.cover-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--pink-deep);
+  display: inline-block;
+}
+.cover-title .swash {
+  font-family: var(--ff-accent);
+  color: var(--coral);
+  font-style: normal;
+}
+.cover-title .take-seat {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 800;
+  color: var(--blue-deep);
+  letter-spacing: -.02em;
+  display: inline-block;
+  position: relative;
+  margin-top: .25em;
+  line-height: 1.05;
+}
+.cover-title { line-height: .98; }
+.cover-title .take-seat::after {
+  content: '';
+  position: absolute;
+  left: 2%; right: 2%; bottom: 8%;
+  height: .18em;
+  background: var(--yellow);
+  border-radius: 6px;
+  z-index: -1;
+  opacity: .7;
+}
+.cover-title .cn {
+  display: block;
+  font-family: var(--ff-cn);
+  font-weight: 700;
+  font-size: .34em;
+  letter-spacing: .04em;
+  color: var(--ink-soft);
+  margin-top: .3em;
+}
+
+.cover-tagline {
+  font-family: var(--ff-display);
+  font-size: clamp(18px, 1.8vw, 22px);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--ink-soft);
+  max-width: 38ch;
+  line-height: 1.55;
+}
+.cover-tagline strong {
+  font-style: normal;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--yellow-soft);
+  padding: 0 .25em;
+  border-radius: 4px;
+  box-decoration-break: clone;
+}
+
+/* Photo polaroids scattered in cover */
+.cover-photos {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.polaroid {
+  position: absolute;
+  padding: 14px 14px 48px;
+  background: var(--paper);
+  border-radius: 3px;
+  box-shadow: var(--sh-sticker);
+  transition: transform .6s cubic-bezier(.2,.8,.25,1);
+  pointer-events: auto;
+}
+.polaroid::after {
+  content: attr(data-caption);
+  position: absolute;
+  left: 0; right: 0; bottom: 14px;
+  text-align: center;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.polaroid img {
+  display: block;
+  border-radius: 2px;
+  object-fit: cover;
+  filter: saturate(1.02);
+}
+.polaroid .tape {
+  position: absolute;
+  top: -12px; left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 86px; height: 22px;
+  background: linear-gradient(180deg, rgba(255,206,58,.78), rgba(255,206,58,.58));
+  border-left: 1px dashed rgba(43,37,33,.15);
+  border-right: 1px dashed rgba(43,37,33,.15);
+  box-shadow: 0 2px 6px rgba(43,37,33,.08);
+}
+
+.cover-photos .p-grad {
+  top: 12%; right: 3%;
+  width: 215px;
+  transform: rotate(5deg);
+  animation: floaty 7s ease-in-out infinite;
+  --r: 5deg;
+}
+.cover-photos .p-grad img { width: 100%; height: 250px; }
+.cover-photos .p-deer {
+  top: 42%; right: 18%;
+  width: 180px;
+  transform: rotate(-6deg);
+  animation: floaty 6s ease-in-out infinite .8s;
+  --r: -6deg;
+}
+.cover-photos .p-deer img { width: 100%; height: 200px; }
+.cover-photos .p-ski {
+  bottom: 8%; right: 6%;
+  width: 170px;
+  transform: rotate(8deg);
+  animation: floaty 8s ease-in-out infinite .4s;
+  --r: 8deg;
+}
+.cover-photos .p-ski img { width: 100%; height: 180px; }
+.polaroid:hover { transform: rotate(var(--r,0deg)) scale(1.04); z-index: 10; }
+
+/* Decorative stickers on cover */
+.cover .doodle-star {
+  top: 18%; left: 45%;
+  width: 52px; color: var(--yellow);
+  animation: twirl 14s linear infinite;
+}
+.cover .doodle-squiggle {
+  top: 30%; left: 2%;
+  width: 110px; color: var(--pink-deep);
+  animation: floaty 5s ease-in-out infinite;
+  --r: -5deg;
+}
+.cover .doodle-heart {
+  bottom: 18%; left: 8%;
+  width: 46px; color: var(--coral);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+.cover .doodle-cloud {
+  top: 12%; left: 18%;
+  width: 100px; color: var(--blue-soft);
+  animation: floaty 9s ease-in-out infinite;
+  --r: 3deg;
+}
+.cover .doodle-flower {
+  bottom: 28%; right: 48%;
+  width: 56px; color: var(--pink);
+  animation: twirl 18s linear infinite reverse;
+}
+
+.scroll-hint {
+  position: absolute;
+  left: 56px; bottom: 40px;
+  display: flex; align-items: center; gap: 14px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-soft);
+  letter-spacing: .08em;
+  text-transform: lowercase;
+}
+.scroll-hint .bar {
+  width: 44px; height: 1.5px; background: currentColor; position: relative;
+}
+.scroll-hint .bar::after {
+  content: ''; position: absolute; right: 0; top: -3px;
+  width: 8px; height: 8px; border-right: 1.5px solid currentColor; border-top: 1.5px solid currentColor;
+  transform: rotate(45deg);
+}
+.scroll-hint .blob {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--coral);
+  animation: waveY 1.4s ease-in-out infinite;
+}
+
+@media (max-width: 860px) {
+  .cover-photos .p-grad { width: 140px; top: 2%; }
+  .cover-photos .p-grad img { height: 170px; }
+  .cover-photos .p-deer { width: 110px; top: 34%; right: 2%; }
+  .cover-photos .p-deer img { height: 120px; }
+  .cover-photos .p-ski { width: 110px; right: 4%; bottom: 2%; }
+  .cover-photos .p-ski img { height: 120px; }
+  .cover-title { font-size: clamp(48px, 14vw, 100px); }
+  .scroll-hint { left: 22px; bottom: 24px; }
+}
+@media (max-width: 560px) {
+  .cover-photos .p-grad { width: 110px; top: 1%; right: 1%; }
+  .cover-photos .p-grad img { height: 135px; }
+  .cover-photos .p-deer { display: none; }
+  .cover-photos .p-ski { width: 96px; right: 2%; bottom: 8%; }
+  .cover-photos .p-ski img { height: 100px; }
+  .cover .doodle-cloud, .cover .doodle-squiggle { display: none; }
+}
+
+/* ================================================================
+   ABOUT
+   ================================================================ */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 70px;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+
+.portrait-wrap {
+  position: relative;
+  padding: 22px 22px 70px;
+  background: var(--paper);
+  border-radius: 4px;
+  box-shadow: var(--sh-sticker);
+  transform: rotate(-2.5deg);
+  width: fit-content;
+  justify-self: center;
+}
+.portrait-wrap::before {
+  content: '';
+  position: absolute;
+  top: -18px; left: 46px;
+  width: 110px; height: 28px;
+  background: linear-gradient(180deg, rgba(108,184,218,.8), rgba(108,184,218,.55));
+  transform: rotate(-6deg);
+  box-shadow: 0 2px 8px rgba(43,37,33,.1);
+}
+.portrait-wrap {
+  padding-bottom: 26px;
+}
+.portrait-wrap img {
+  width: 380px; height: 460px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.portrait-wrap .pushpin {
+  position: absolute;
+  top: 28px; right: 28px;
+  width: 18px; height: 18px;
+  background: radial-gradient(circle at 35% 35%, #FFD1DA, var(--pink-deep) 60%);
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(43,37,33,.3), inset -2px -2px 4px rgba(43,37,33,.2);
+}
+
+.about-text {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.about-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--coral);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.about-kicker::before {
+  content: ''; width: 28px; height: 2px; background: currentColor;
+}
+.about-para {
+  font-size: 16.5px;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  max-width: 48ch;
+}
+.about-para strong {
+  font-weight: 700;
+  color: var(--ink);
+  background: linear-gradient(180deg, transparent 62%, var(--yellow-soft) 62%);
+  padding: 0 3px;
+}
+
+.fact-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 560px) { .fact-row { grid-template-columns: 1fr; } }
+
+.fact-chip {
+  padding: 18px 18px 20px;
+  border-radius: 18px;
+  box-shadow: var(--sh-clay);
+  position: relative;
+  overflow: hidden;
+}
+.fact-chip::before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 60px; height: 60px;
+  border-radius: 0 0 0 100%;
+  background: rgba(255,255,255,.35);
+}
+.fact-chip.y { background: var(--yellow); color: var(--ink); }
+.fact-chip.b { background: var(--blue); color: var(--ink); }
+.fact-chip.p { background: var(--pink); color: var(--ink); }
+.fact-chip .k {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  opacity: .75;
+}
+.fact-chip .v {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.15;
+  text-align: center;
+  padding: 8px 0;
+  letter-spacing: -.01em;
+}
+
+.hobbies-block {
+  margin-top: 14px;
+  padding: 22px 24px;
+  border-radius: 22px;
+  background: var(--paper);
+  border: 1.5px dashed rgba(43,37,33,.18);
+  box-shadow: 0 18px 30px -22px rgba(43,37,33,.22);
+}
+.hobbies-label {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+  display: block;
+}
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-size: 13.5px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--cream);
+  border: 1.3px solid rgba(43,37,33,.12);
+  color: var(--ink);
+  box-shadow: 0 2px 0 rgba(43,37,33,.06);
+  transition: transform .2s ease, background .2s ease;
+}
+.chip:nth-child(2n) { background: var(--yellow-soft); }
+.chip:nth-child(3n) { background: var(--blue-soft); }
+.chip:nth-child(5n) { background: var(--pink-soft); }
+.chip:hover { transform: translateY(-2px) rotate(-1.5deg); }
+
+.about-section .doodle-arrow {
+  position: absolute;
+  top: 46%; left: 44%;
+  width: 80px;
+  color: var(--blue-deep);
+  transform: rotate(-8deg);
+}
+
+/* ================================================================
+   AI CODING
+   ================================================================ */
+.ai-section { text-align: left; }
+.ai-lead {
+  max-width: 92ch;
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--ink-mid);
+  margin: -10px 0 44px;
+}
+.ai-lead strong {
+  font-weight: 700;
+  background: linear-gradient(180deg, transparent 62%, var(--pink-soft) 62%);
+  padding: 0 3px;
+}
+
+.video-card {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: var(--sh-lift);
+  background: linear-gradient(135deg, #2B2419 0%, #3D3122 100%);
+  transform: rotate(-.8deg);
+  border: 1px solid rgba(43,37,33,.18);
+}
+.video-card::before {
+  /* clay-like inset highlight */
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: 24px;
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.12), inset 0 -2px 0 rgba(0,0,0,.4);
+  pointer-events: none;
+  z-index: 3;
+}
+.video-el {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+.video-card.playing .video-el { opacity: 1; }
+.video-card.playing .video-overlay { opacity: 0; pointer-events: none; }
+
+.video-overlay {
+  position: absolute; inset: 0;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--cream);
+  background:
+    linear-gradient(180deg, rgba(20,14,8,.35) 0%, rgba(20,14,8,.15) 30%, rgba(20,14,8,.4) 75%, rgba(20,14,8,.75) 100%),
+    url('./assets/video/ai-coding-poster.jpg') center/cover;
+  transition: opacity .4s ease;
+  z-index: 2;
+}
+.video-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border: 1px dashed rgba(255,255,255,.18);
+  border-radius: 10px;
+  pointer-events: none;
+}
+
+.video-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--yellow);
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+.video-label .rec {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #FF4747;
+  box-shadow: 0 0 0 4px rgba(255,71,71,.25);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+.video-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; }
+.video-title {
+  font-family: var(--ff-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1;
+  letter-spacing: -.02em;
+  color: var(--cream);
+}
+.video-title em { font-style: italic; color: var(--pink); font-weight: 400; }
+.video-sub {
+  font-family: var(--ff-cn);
+  font-size: 14px;
+  color: rgba(251,241,215,.72);
+  margin-top: 10px;
+  letter-spacing: .02em;
+}
+
+.play-btn {
+  width: 88px; height: 88px;
+  border-radius: 50%;
+  background: var(--yellow);
+  color: var(--ink);
+  display: grid; place-items: center;
+  box-shadow:
+    0 2px 0 rgba(43,37,33,.25),
+    0 18px 36px -10px rgba(238,174,18,.55),
+    inset 0 3px 3px rgba(255,255,255,.6),
+    inset 0 -4px 6px rgba(43,37,33,.2);
+  transition: transform .25s ease, box-shadow .25s ease;
+  align-self: flex-end;
+}
+.play-btn:hover { transform: translateY(-3px) scale(1.05); }
+.play-btn svg { transform: translateX(3px); }
+
+.video-corner {
+  position: absolute;
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,205,58,.5);
+}
+.video-corner.tl { top: 12px; left: 12px; border-right: 0; border-bottom: 0; }
+.video-corner.tr { top: 12px; right: 12px; border-left: 0; border-bottom: 0; }
+.video-corner.bl { bottom: 12px; left: 12px; border-right: 0; border-top: 0; }
+.video-corner.br { bottom: 12px; right: 12px; border-left: 0; border-top: 0; }
+
+/* Decorative stickers beside video */
+.ai-section .sticker-1 {
+  position: absolute;
+  top: 22%; right: 3%;
+  width: 180px;
+  color: var(--blue-deep);
+  animation: floaty 6s ease-in-out infinite;
+  --r: 10deg;
+}
+.ai-section .sticker-2 {
+  position: absolute;
+  bottom: 18%; left: 4%;
+  width: 70px;
+  color: var(--coral);
+  animation: twirl 20s linear infinite;
+}
+
+@media (max-width: 720px) {
+  .video-overlay { padding: 22px; }
+  .video-card { border-radius: 18px; }
+  .play-btn { width: 68px; height: 68px; }
+}
+
+/* ================================================================
+   DESIGN / CAROUSEL
+   ================================================================ */
+.design-lead {
+  max-width: 58ch;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  margin: -10px 0 44px;
+}
+
+.carousel {
+  position: relative;
+  border-radius: 32px;
+  padding: 60px 56px 100px;
+  background:
+    radial-gradient(720px 400px at 20% 0%, var(--yellow-soft), transparent 70%),
+    radial-gradient(720px 480px at 85% 100%, var(--pink-soft), transparent 70%),
+    var(--paper);
+  box-shadow: var(--sh-card);
+  border: 1.5px solid rgba(43,37,33,.08);
+  overflow: hidden;
+}
+.carousel::before {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  border-radius: 22px;
+  border: 1px dashed rgba(43,37,33,.16);
+  pointer-events: none;
+}
+.carousel-track-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+.carousel-track {
+  display: flex;
+  transition: transform .75s cubic-bezier(.2,.85,.3,1);
+  will-change: transform;
+}
+.slide {
+  flex: 0 0 100%;
+  padding: 10px 20px;
+}
+.slide-inner {
+  display: grid;
+  grid-template-columns: .85fr 1fr;
+  gap: 50px;
+  align-items: center;
+  min-height: 460px;
+}
+@media (max-width: 860px) {
+  .slide-inner { grid-template-columns: 1fr; gap: 28px; }
+  .carousel { padding: 40px 24px 90px; }
+  .slide { padding: 6px; }
+}
+
+.slide-caption { padding: 10px; }
+.slide-number {
+  display: inline-block;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--coral);
+  letter-spacing: .12em;
+  margin-bottom: 12px;
+  padding: 4px 10px;
+  border: 1px solid var(--coral);
+  border-radius: 999px;
+}
+.slide-title {
+  font-family: var(--ff-cn);
+  font-weight: 800;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.15;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.slide-en {
+  display: block;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: .5em;
+  color: var(--ink-soft);
+  letter-spacing: .01em;
+  margin-bottom: 4px;
+}
+.slide-sub {
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--ink-mid);
+  max-width: 34ch;
+}
+.slide-tags {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-top: 18px;
+}
+.slide-tag {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--cream);
+  border: 1px solid rgba(43,37,33,.14);
+  color: var(--ink-soft);
+}
+
+.slide-art {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 440px;
+}
+
+/* Each slide's art layout */
+.slide-art.single-card {
+  padding: 24px;
+}
+.slide-art.single-card img {
+  max-height: 420px;
+  max-width: 100%;
+  border-radius: 14px;
+  box-shadow: var(--sh-lift);
+  background: var(--cream);
+}
+.slide-art.poster img {
+  max-height: 440px;
+  border-radius: 12px;
+  box-shadow: var(--sh-lift);
+  transform: rotate(-1.5deg);
+}
+.slide-art.stacked {
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px;
+}
+.slide-art.stacked img {
+  width: 100%;
+  max-width: 460px;
+  border-radius: 10px;
+  box-shadow: var(--sh-sticker);
+}
+.slide-art.stacked img:nth-child(1) { transform: rotate(-1.5deg); }
+.slide-art.stacked img:nth-child(2) { transform: rotate(1.8deg); }
+
+.slide-art.fan {
+  position: relative;
+  height: 440px;
+}
+.slide-art.fan img {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 270px;
+  border-radius: 10px;
+  box-shadow: var(--sh-sticker);
+  transition: transform .4s ease;
+}
+.slide-art.fan img:nth-child(1) { transform: translate(-50%,-50%) rotate(-16deg) translateX(-150px); }
+.slide-art.fan img:nth-child(2) { transform: translate(-50%,-50%) rotate(-8deg) translateX(-78px); }
+.slide-art.fan img:nth-child(3) { transform: translate(-50%,-50%) rotate(0deg); z-index: 2; }
+.slide-art.fan img:nth-child(4) { transform: translate(-50%,-50%) rotate(8deg) translateX(78px); }
+.slide-art.fan img:nth-child(5) { transform: translate(-50%,-50%) rotate(16deg) translateX(150px); }
+.slide-art.fan:hover img:nth-child(1) { transform: translate(-50%,-50%) rotate(-20deg) translateX(-200px); }
+.slide-art.fan:hover img:nth-child(5) { transform: translate(-50%,-50%) rotate(20deg) translateX(200px); }
+
+.slide-art.two-pages {
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  padding: 8px;
+}
+.slide-art.two-pages img {
+  flex: 1 1 0;
+  min-width: 0;
+  height: auto;
+  width: auto;
+  max-width: calc(50% - 7px);
+  max-height: 460px;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: var(--sh-sticker);
+  background: var(--paper);
+}
+.slide-art.two-pages img:nth-child(1) { transform: rotate(-1.5deg); }
+.slide-art.two-pages img:nth-child(2) { transform: rotate(1.5deg); }
+
+@media (max-width: 860px) {
+  .slide-art { min-height: 340px; }
+  .slide-art.fan { height: 320px; }
+  .slide-art.fan img { width: 200px; }
+  .slide-art.fan img:nth-child(1) { transform: translate(-50%,-50%) rotate(-16deg) translateX(-100px); }
+  .slide-art.fan img:nth-child(5) { transform: translate(-50%,-50%) rotate(16deg) translateX(100px); }
+  .slide-art.fan img:nth-child(2) { transform: translate(-50%,-50%) rotate(-8deg) translateX(-50px); }
+  .slide-art.fan img:nth-child(4) { transform: translate(-50%,-50%) rotate(8deg) translateX(50px); }
+  .slide-art.two-pages img { max-height: 280px; }
+  .slide-art.poster img { max-height: 320px; }
+  .slide-art.stacked img { max-width: 100%; }
+  .slide-art.single-card img { max-height: 300px; }
+}
+
+.carousel-btn {
+  position: absolute;
+  bottom: 30px;
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--cream);
+  display: grid; place-items: center;
+  box-shadow: 0 8px 24px -8px rgba(43,37,33,.45), inset 0 2px 0 rgba(255,255,255,.15);
+  transition: transform .25s ease, background .25s ease;
+  z-index: 4;
+}
+.carousel-btn:hover { transform: translateY(-2px); background: var(--coral); }
+.carousel-btn.prev { left: 40px; }
+.carousel-btn.next { right: 40px; }
+
+.carousel-dots {
+  position: absolute;
+  left: 50%; bottom: 44px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 4;
+}
+.carousel-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: rgba(43,37,33,.22);
+  transition: background .3s ease, transform .3s ease, width .3s ease;
+  cursor: pointer;
+}
+.carousel-dot.active { background: var(--coral); width: 28px; border-radius: 999px; }
+
+@media (max-width: 560px) {
+  .carousel-btn { width: 44px; height: 44px; bottom: 22px; }
+  .carousel-btn.prev { left: 14px; }
+  .carousel-btn.next { right: 14px; }
+  .carousel-dots { bottom: 34px; }
+}
+
+/* ================================================================
+   WRITING
+   ================================================================ */
+.writing-lead {
+  max-width: 58ch;
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--ink-mid);
+  margin: -10px 0 50px;
+}
+.writing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+@media (max-width: 860px) { .writing-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .writing-grid { grid-template-columns: 1fr; gap: 22px; } }
+
+.write-card {
+  position: relative;
+  border-radius: 22px;
+  background: var(--paper);
+  box-shadow: var(--sh-card);
+  display: flex;
+  flex-direction: column;
+  transition: transform .45s cubic-bezier(.2,.8,.25,1), box-shadow .45s ease;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(43,37,33,.06);
+}
+.write-card::after {
+  /* paper clip */
+  content: '';
+  position: absolute;
+  top: -10px; right: 30px;
+  width: 24px; height: 60px;
+  border: 2.5px solid rgba(43,37,33,.55);
+  border-radius: 12px 12px 4px 4px;
+  border-bottom: 0;
+  box-shadow: 0 3px 6px rgba(43,37,33,.2);
+  z-index: 4;
+  background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.35));
+}
+.write-card:hover {
+  transform: translateY(-10px) rotate(var(--rr, 0deg));
+  box-shadow: 0 40px 70px -30px rgba(43,37,33,.5), 0 20px 30px -15px rgba(43,37,33,.2);
+}
+.write-card.tilt-1 { --rr: -1.5deg; transform: rotate(-1.5deg); }
+.write-card.tilt-2 { --rr: 1.2deg; transform: rotate(1.2deg); }
+.write-card.tilt-3 { --rr: -.8deg; transform: rotate(-.8deg); }
+.write-card.tilt-4 { --rr: 1.8deg; transform: rotate(1.8deg); }
+.write-card.tilt-5 { --rr: -1.2deg; transform: rotate(-1.2deg); }
+
+.write-img {
+  position: relative;
+  width: 100%;
+  padding-top: 100%; /* enforces strict 1:1 aspect ratio */
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--cream-deep), var(--pink-soft));
+  flex-shrink: 0;
+}
+.write-img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform .6s cubic-bezier(.2,.8,.25,1);
+}
+.write-card:hover .write-img img { transform: scale(1.05); }
+
+.write-body {
+  padding: 22px 22px 24px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.write-name {
+  font-family: var(--ff-cn);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  line-height: 1.4;
+  letter-spacing: -.005em;
+}
+.write-desc {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-mid);
+  flex-grow: 1;
+}
+.write-more {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--coral);
+  letter-spacing: .02em;
+  transition: gap .3s ease;
+}
+.write-card:hover .write-more { gap: 14px; }
+
+.writing-footnote {
+  margin-top: 30px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ================================================================
+   CONTACT
+   ================================================================ */
+.contact-section {
+  text-align: left;
+}
+.contact-lead {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(22px, 2.6vw, 30px);
+  line-height: 1.55;
+  color: var(--ink-mid);
+  max-width: 40ch;
+  margin: -8px 0 42px;
+}
+.contact-lead strong {
+  font-style: normal;
+  font-weight: 800;
+  color: var(--ink);
+  background: var(--yellow-soft);
+  padding: 0 .25em;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+@media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.contact-card {
+  position: relative;
+  padding: 30px 28px 28px;
+  border-radius: 24px;
+  box-shadow: var(--sh-clay);
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform .4s cubic-bezier(.2,.8,.25,1);
+}
+.contact-card:hover { transform: translateY(-8px) rotate(-1deg); }
+.contact-card.c1 { background: var(--yellow); transform: rotate(-1.2deg); }
+.contact-card.c2 { background: var(--pink); transform: rotate(.8deg); }
+.contact-card.c3 { background: var(--blue); transform: rotate(-.6deg); }
+
+.contact-card::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.3);
+  z-index: -1;
+}
+.contact-icon {
+  width: 62px; height: 62px;
+  border-radius: 18px;
+  background: var(--paper);
+  display: grid; place-items: center;
+  font-family: var(--ff-accent);
+  font-size: 26px;
+  color: var(--ink);
+  box-shadow: var(--sh-sticker);
+  margin-bottom: 20px;
+}
+.contact-label {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink);
+  opacity: .75;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.contact-value {
+  margin-top: 6px;
+  font-family: var(--ff-cn);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+  line-height: 1.4;
+  word-break: break-all;
+}
+.contact-note {
+  display: block;
+  margin-top: 8px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(43,37,33,.6);
+}
+
+.contact-footnote {
+  margin-top: 36px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-style: italic;
+  text-align: center;
+}
+
+/* Goodbye block (merged inside contact section) */
+.goodbye-block {
+  position: relative;
+  margin-top: 100px;
+  padding: 80px 20px 30px;
+  text-align: center;
+  isolation: isolate;
+}
+.goodbye-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-soft);
+  letter-spacing: .15em;
+  text-transform: lowercase;
+}
+.goodbye-divider span {
+  flex: 0 1 110px;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, var(--ink-soft), transparent);
+}
+.goodbye-block .doodle-star-1 { top: 6%; left: 8%; width: 56px; color: var(--yellow); animation: twirl 18s linear infinite; }
+.goodbye-block .doodle-star-2 { top: 14%; right: 12%; width: 38px; color: var(--pink-deep); animation: twirl 14s linear infinite reverse; }
+.goodbye-block .doodle-flower-1 { bottom: 14%; left: 12%; width: 50px; color: var(--blue); animation: floaty 6s ease-in-out infinite; }
+.goodbye-block .doodle-heart-1 { bottom: 16%; right: 12%; width: 40px; color: var(--coral); animation: pulse 2s ease-in-out infinite; }
+.goodbye-block .doodle-squiggle-1 { top: 32%; left: 4%; width: 80px; color: var(--pink); animation: floaty 7s ease-in-out infinite; --r: 4deg; }
+.goodbye-block .footer-meta {
+  margin-top: 30px;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: .06em;
+}
+
+/* ================================================================
+   GOODBYE
+   ================================================================ */
+.goodbye-section {
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 40px;
+  overflow: hidden;
+}
+.goodbye-eyebrow {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--coral);
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+.goodbye-title {
+  font-family: var(--ff-display);
+  font-weight: 800;
+  font-size: clamp(90px, 17vw, 240px);
+  line-height: .86;
+  letter-spacing: -.04em;
+  color: var(--ink);
+}
+.goodbye-title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--pink-deep);
+}
+.goodbye-title .heart {
+  display: inline-block;
+  color: var(--coral);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+.goodbye-zh {
+  font-family: var(--ff-cn);
+  font-weight: 700;
+  font-size: clamp(22px, 3vw, 32px);
+  color: var(--ink);
+  margin-top: 30px;
+}
+.goodbye-body {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink-soft);
+  margin-top: 16px;
+  max-width: 40ch;
+  line-height: 1.7;
+}
+.signature {
+  margin-top: 48px;
+  font-family: var(--ff-accent);
+  font-size: 28px;
+  color: var(--coral);
+}
+.signature::before, .signature::after {
+  content: '';
+  display: inline-block;
+  width: 40px; height: 1.5px;
+  background: currentColor;
+  vertical-align: middle;
+  margin: 0 18px;
+}
+
+.footer-meta {
+  position: absolute;
+  bottom: 30px;
+  left: 0; right: 0;
+  text-align: center;
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-size: 13px;
+  color: var(--ink-soft);
+  letter-spacing: .06em;
+}
+
+/* Goodbye decorative stickers */
+.goodbye-section .doodle-star-1 { top: 14%; left: 12%; width: 60px; color: var(--yellow); animation: twirl 18s linear infinite; }
+.goodbye-section .doodle-star-2 { top: 22%; right: 18%; width: 40px; color: var(--pink-deep); animation: twirl 14s linear infinite reverse; }
+.goodbye-section .doodle-flower-1 { bottom: 22%; left: 16%; width: 54px; color: var(--blue); animation: floaty 6s ease-in-out infinite; }
+.goodbye-section .doodle-cloud-1 { top: 18%; right: 8%; width: 110px; color: var(--blue-soft); animation: floaty 8s ease-in-out infinite; }
+.goodbye-section .doodle-heart-1 { bottom: 18%; right: 16%; width: 44px; color: var(--coral); animation: pulse 2s ease-in-out infinite; }
+.goodbye-section .doodle-squiggle-1 { top: 42%; left: 6%; width: 90px; color: var(--pink); animation: floaty 7s ease-in-out infinite; --r: 4deg; }
+
+/* ================================================================
+   SECTION DECORATIONS
+   ================================================================ */
+.about-section .doodle-sun { top: 18%; right: 8%; width: 78px; color: var(--yellow-deep); animation: twirl 22s linear infinite; }
+.about-section .doodle-sparkle { top: 60%; right: 42%; width: 38px; color: var(--pink-deep); animation: pulse 2s ease-in-out infinite; }
+.ai-section .doodle-bolt { top: 16%; right: 8%; width: 46px; color: var(--yellow-deep); animation: floaty 5s ease-in-out infinite; --r: 8deg; }
+.design-section .doodle-triangle { top: 14%; right: 12%; width: 42px; color: var(--coral); animation: floaty 6s ease-in-out infinite; --r: -6deg; }
+.writing-section .doodle-quote { top: 10%; right: 10%; width: 68px; color: var(--blue-deep); opacity: .6; }
+.contact-section .doodle-envelope { top: 14%; right: 8%; width: 72px; color: var(--pink-deep); animation: floaty 5s ease-in-out infinite; --r: -4deg; }
+
+/* Utility: sr-only */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+</style>
+</head>
+<body>
+
+<!-- ============= SIDE NAV ============= -->
+<nav class="side-nav" aria-label="页面导航">
+  <a href="#cover"   data-label="cover"    class="active"></a>
+  <a href="#about"   data-label="about me"></a>
+  <a href="#ai"      data-label="ai coding"></a>
+  <a href="#design"  data-label="design"></a>
+  <a href="#writing" data-label="writing"></a>
+  <a href="#contact" data-label="contact &amp; bye"></a>
+</nav>
+
+<!-- ============= 0 · COVER ============= -->
+<section id="cover" class="section cover">
+  <div class="cover-photos" aria-hidden="true">
+    <div class="polaroid p-grad" style="--r:5deg" data-caption="">
+      <div class="tape"></div>
+      <img src="./assets/person/person1.jpg" alt="毕业照">
+    </div>
+    <div class="polaroid p-deer" style="--r:-6deg" data-caption="">
+      <div class="tape"></div>
+      <img src="./assets/person/person2.jpg" alt="鹿角发箍">
+    </div>
+    <div class="polaroid p-ski" style="--r:8deg" data-caption="">
+      <div class="tape"></div>
+      <img src="./assets/person/person3.jpg" alt="滑雪">
+    </div>
+
+    <!-- Doodles -->
+    <svg class="doodle doodle-star" viewBox="0 0 80 80">
+      <path d="M40 4 L48 30 L74 32 L54 48 L62 72 L40 58 L18 72 L26 48 L6 32 L32 30 Z" fill="currentColor" stroke="#2B2419" stroke-width="3" stroke-linejoin="round"/>
+    </svg>
+    <svg class="doodle doodle-squiggle" viewBox="0 0 140 30">
+      <path d="M4 15 Q 18 -5, 32 15 T 60 15 T 88 15 T 116 15 T 136 15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+    <svg class="doodle doodle-heart" viewBox="0 0 50 50">
+      <path d="M25 44 C -10 22, 10 -2, 25 14 C 40 -2, 60 22, 25 44 Z" fill="currentColor" stroke="#2B2419" stroke-width="2.5" stroke-linejoin="round"/>
+    </svg>
+    <svg class="doodle doodle-cloud" viewBox="0 0 120 70">
+      <path d="M30 55 Q 0 55 10 35 Q 0 15 25 20 Q 30 0 55 10 Q 75 -5 85 18 Q 115 15 110 40 Q 120 60 95 58 Q 65 70 30 55 Z" fill="currentColor" stroke="#2B2419" stroke-width="2.5" stroke-linejoin="round"/>
+    </svg>
+    <svg class="doodle doodle-flower" viewBox="0 0 60 60">
+      <circle cx="30" cy="10" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="50" cy="30" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="30" cy="50" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="10" cy="30" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="30" cy="30" r="6" fill="#FFCD3A" stroke="#2B2419" stroke-width="2"/>
+    </svg>
+  </div>
+
+  <div class="cover-inner">
+    <div class="reveal d1">
+      <span class="hello-badge"><span class="dot"></span>hello, friend</span>
+    </div>
+    <h1 class="cover-title reveal d2">
+      I'm <em>Cozy</em><span class="swash">,</span><br>
+      <span class="take-seat">Take a Seat</span>
+    </h1>
+  </div>
+
+  <div class="scroll-hint reveal d4">
+    <span class="blob"></span>
+    <span>scroll to enter</span>
+    <span class="bar"></span>
+  </div>
+</section>
+
+<!-- ============= 1 · ABOUT ME ============= -->
+<section id="about" class="section about-section">
+  <svg class="doodle doodle-sun" viewBox="0 0 80 80">
+    <circle cx="40" cy="40" r="18" fill="currentColor" stroke="#2B2419" stroke-width="2.5"/>
+    <g stroke="#2B2419" stroke-width="3" stroke-linecap="round">
+      <line x1="40" y1="4" x2="40" y2="14"/><line x1="40" y1="66" x2="40" y2="76"/>
+      <line x1="4" y1="40" x2="14" y2="40"/><line x1="66" y1="40" x2="76" y2="40"/>
+      <line x1="14" y1="14" x2="22" y2="22"/><line x1="58" y1="58" x2="66" y2="66"/>
+      <line x1="66" y1="14" x2="58" y2="22"/><line x1="22" y1="58" x2="14" y2="66"/>
+    </g>
+  </svg>
+  <svg class="doodle doodle-sparkle" viewBox="0 0 40 40">
+    <path d="M20 0 L24 16 L40 20 L24 24 L20 40 L16 24 L0 20 L16 16 Z" fill="currentColor"/>
+  </svg>
+
+  <header class="section-header reveal">
+    <span class="section-number">— 01 / part one</span>
+    <h2 class="section-title"><em>about</em> me</h2>
+    <span class="section-zh">关于我这个人</span>
+  </header>
+
+  <div class="about-grid">
+    <div class="reveal d1">
+      <div class="portrait-wrap">
+        <span class="pushpin"></span>
+        <img src="./assets/person/person2.jpg" alt="曹泽宇的一张生活照">
+      </div>
+    </div>
+
+    <div class="about-text">
+      <span class="about-kicker reveal d2">some facts about me</span>
+      <p class="about-para reveal d2">
+        学过编程、拿过信息学奥赛省奖、爱折腾 <strong>AI Coding</strong>，但选了政史地的纯血文科生
+      </p>
+      <p class="about-para reveal d3">
+        <strong>喜欢听八卦</strong>，所以做了报社记者&amp;心理咨询师
+      </p>
+      <p class="about-para reveal d4">
+        <strong>爱写写画画</strong>，某写作平台（已倒闭）金牌写手（现已金盆洗手），苦练素描3年仍未学会用小刀削铅笔
+      </p>
+
+      <div class="fact-row">
+        <div class="fact-chip y reveal d3">
+          <div class="v">AI</div>
+        </div>
+        <div class="fact-chip b reveal d4">
+          <div class="v">Design</div>
+        </div>
+        <div class="fact-chip p reveal d5">
+          <div class="v">Writing</div>
+        </div>
+      </div>
+
+      <div class="hobbies-block reveal d5">
+        <span class="hobbies-label">daily energy comes from ↓</span>
+        <div class="chip-row">
+          <span class="chip">滑雪 ⛷</span>
+          <span class="chip">陶艺</span>
+          <span class="chip">按摩</span>
+          <span class="chip">电影</span>
+          <span class="chip">K 歌</span>
+          <span class="chip">K-pop</span>
+          <span class="chip">到处旅行</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 2 · AI CODING ============= -->
+<section id="ai" class="section ai-section">
+  <svg class="doodle doodle-bolt" viewBox="0 0 40 60">
+    <path d="M22 2 L6 34 L18 34 L14 58 L34 24 L22 24 Z" fill="currentColor" stroke="#2B2419" stroke-width="2.5" stroke-linejoin="round"/>
+  </svg>
+  <svg class="doodle sticker-1" viewBox="0 0 180 70">
+    <rect x="3" y="8" width="174" height="54" rx="12" fill="#FFFBF0" stroke="#2B2419" stroke-width="2.5"/>
+    <text x="90" y="43" font-family="Fraunces, serif" font-style="italic" font-size="26" fill="#3E93B9" text-anchor="middle" font-weight="700">vibe coding</text>
+  </svg>
+  <svg class="doodle sticker-2" viewBox="0 0 70 70">
+    <path d="M35 5 L42 26 L63 29 L48 44 L54 65 L35 52 L16 65 L22 44 L7 29 L28 26 Z" fill="currentColor" stroke="#2B2419" stroke-width="3"/>
+  </svg>
+
+  <header class="section-header reveal">
+    <span class="section-number">— 02 / part two</span>
+    <h2 class="section-title"><em>about</em> AI&nbsp;Coding</h2>
+    <span class="section-zh">我与 AI 一起造东西</span>
+  </header>
+
+  <p class="ai-lead reveal d1">
+    在字节做 mapping 时，发现「用论文标题找作者信息（姓名、单位、邮箱）」这一机械动作居然占了 HR 30% 的精力，<strong>于是我用 AI Coding 把活外包给了代码</strong>。
+  </p>
+
+  <div class="video-card reveal d2" id="videoCard">
+    <video class="video-el" id="videoEl" preload="metadata" playsinline controls poster="./assets/video/ai-coding-poster.jpg">
+      <source src="./assets/video/ai-coding.mp4" type="video/mp4">
+    </video>
+    <div class="video-overlay" id="videoOverlay">
+      <div class="video-corner tl"></div>
+      <div class="video-corner tr"></div>
+      <div class="video-corner bl"></div>
+      <div class="video-corner br"></div>
+
+      <div class="video-label"><span class="rec"></span>recording</div>
+
+      <div class="video-bottom">
+        <div>
+          <div class="video-title"><em>coding</em> with&nbsp;AI</div>
+          <div class="video-sub" id="videoSub">视频即将上线，敬请期待 ♡</div>
+        </div>
+        <button class="play-btn" id="playBtn" aria-label="播放视频">
+          <svg viewBox="0 0 24 24" width="38" height="38">
+            <path d="M8 5v14l11-7z" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= 3 · DESIGN ============= -->
+<section id="design" class="section design-section">
+  <svg class="doodle doodle-triangle" viewBox="0 0 60 60">
+    <path d="M30 4 L56 54 L4 54 Z" fill="currentColor" stroke="#2B2419" stroke-width="3" stroke-linejoin="round"/>
+  </svg>
+
+  <header class="section-header reveal">
+    <span class="section-number">— 03 / part three</span>
+    <h2 class="section-title"><em>about</em> Design</h2>
+    <span class="section-zh">那些我设计过的小东西</span>
+  </header>
+
+  <p class="design-lead reveal d1">
+    点击左右两侧的按钮，查看我的设计作品
+  </p>
+
+  <div class="carousel reveal d2" id="carousel">
+    <div class="carousel-track-wrap">
+      <div class="carousel-track" id="carouselTrack">
+
+        <!-- 01 桌签 -->
+        <div class="slide" data-cat="桌签">
+          <div class="slide-inner">
+            <div class="slide-caption">
+              <span class="slide-number">01 · 05</span>
+              <h3 class="slide-title">
+                <span class="slide-en">desk tag</span>
+                桌签设计
+              </h3>
+              <div class="slide-tags">
+              </div>
+            </div>
+            <div class="slide-art single-card">
+              <img src="./assets/design/desk-tag.png" alt="桌签设计">
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 新人海报 -->
+        <div class="slide" data-cat="新人海报">
+          <div class="slide-inner">
+            <div class="slide-caption">
+              <span class="slide-number">02 · 05</span>
+              <h3 class="slide-title">
+                <span class="slide-en">welcome poster</span>
+                新人海报
+              </h3>
+              <div class="slide-tags">
+              </div>
+            </div>
+            <div class="slide-art poster">
+              <img src="./assets/design/welcome-poster.png" alt="新人海报">
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 小报头图 -->
+        <div class="slide" data-cat="小报头图">
+          <div class="slide-inner">
+            <div class="slide-caption">
+              <span class="slide-number">03 · 05</span>
+              <h3 class="slide-title">
+                <span class="slide-en">newsletter header</span>
+                小报头图
+              </h3>
+              <div class="slide-tags">
+              </div>
+            </div>
+            <div class="slide-art stacked">
+              <img src="./assets/design/headline-1.png" alt="春版小报头图">
+              <img src="./assets/design/headline-2.png" alt="冬版小报头图">
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 感谢卡 -->
+        <div class="slide" data-cat="感谢卡">
+          <div class="slide-inner">
+            <div class="slide-caption">
+              <span class="slide-number">04 · 05</span>
+              <h3 class="slide-title">
+                <span class="slide-en">thank-you cards</span>
+                表扬卡
+              </h3>
+              <div class="slide-tags">
+              </div>
+            </div>
+            <div class="slide-art fan">
+              <img src="./assets/design/thanks-1.png" alt="学习">
+              <img src="./assets/design/thanks-2.png" alt="速度">
+              <img src="./assets/design/thanks-3.png" alt="勇气">
+              <img src="./assets/design/thanks-4.png" alt="协作">
+              <img src="./assets/design/thanks-5.png" alt="感谢">
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 报纸排版 -->
+        <div class="slide" data-cat="报纸排版">
+          <div class="slide-inner">
+            <div class="slide-caption">
+              <span class="slide-number">05 · 05</span>
+              <h3 class="slide-title">
+                <span class="slide-en">newspaper layout</span>
+                报纸排版
+              </h3>
+              <div class="slide-tags">
+              </div>
+            </div>
+            <div class="slide-art two-pages">
+              <img src="./assets/design/news1.png" alt="报纸页 A6">
+              <img src="./assets/design/news2.png" alt="报纸页 A7">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <button class="carousel-btn prev" id="prevBtn" aria-label="上一张">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="carousel-btn next" id="nextBtn" aria-label="下一张">
+      <svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </div>
+</section>
+
+<!-- ============= 4 · WRITING ============= -->
+<section id="writing" class="section writing-section">
+  <svg class="doodle doodle-quote" viewBox="0 0 80 60">
+    <path d="M10 42 Q 10 10 32 6 L32 18 Q 20 20 20 32 L32 32 L32 52 L10 52 Z M48 42 Q 48 10 70 6 L70 18 Q 58 20 58 32 L70 32 L70 52 L48 52 Z" fill="currentColor"/>
+  </svg>
+
+  <header class="section-header reveal">
+    <span class="section-number">— 04 / part four</span>
+    <h2 class="section-title"><em>about</em> Writing</h2>
+    <span class="section-zh">我写下来的那些小事</span>
+  </header>
+
+  <div class="writing-grid">
+    <!-- 1 人大大师 -->
+    <a class="write-card tilt-1 reveal d1" href="https://mp.weixin.qq.com/s/CHmaXkzkH3pG9Avlb3XkNg" target="_blank" rel="noopener">
+      <div class="write-img">
+        <img src="./assets/writing/head1.jpg" alt="人大大师">
+      </div>
+      <div class="write-body">
+        <div class="write-name">他们在人大课堂里，讲着各自的"心灵哲学"</div>
+        <p class="write-desc">"我非常高兴今天从医院出来上课了，这堂课对我意义非常大。"</p>
+        <span class="write-more">read more →</span>
+      </div>
+    </a>
+
+    <!-- 2 痛经 -->
+    <a class="write-card tilt-2 reveal d2" href="https://mp.weixin.qq.com/s/ERGwjwllHAa_l1qxIlYKbg" target="_blank" rel="noopener">
+      <div class="write-img">
+        <img src="./assets/writing/head2.jpg" alt="痛经">
+      </div>
+      <div class="write-body">
+        <div class="write-name">在国际月经日，看见她们与痛经交手</div>
+        <p class="write-desc">愿天下女性不再痛经。</p>
+        <span class="write-more">read more →</span>
+      </div>
+    </a>
+
+    <!-- 3 喵喵庙 -->
+    <a class="write-card tilt-3 reveal d3" href="https://c.xiumi.us/board/v5/37vTc/490802592?share_depth=1" target="_blank" rel="noopener">
+      <div class="write-img">
+        <img src="./assets/writing/head3.jpg" alt="喵喵庙">
+      </div>
+      <div class="write-body">
+        <div class="write-name">天台曾经有座喵喵庙</div>
+        <p class="write-desc">欢迎来到喵喵的奇幻城堡，喵喵喵喵喵！</p>
+        <span class="write-more">read more →</span>
+      </div>
+    </a>
+
+    <!-- 4 穷开心 -->
+    <a class="write-card tilt-4 reveal d4" href="https://mp.weixin.qq.com/s/MmESblKK0Lq0Xm9FVG0X9Q" target="_blank" rel="noopener">
+      <div class="write-img">
+        <img src="./assets/writing/head4.jpg" alt="穷开心">
+      </div>
+      <div class="write-body">
+        <div class="write-name">大学生，钱几乎没有，但心情好极了</div>
+        <p class="write-desc">不花钱也快乐？人大学生的穷开心指南！</p>
+        <span class="write-more">read more →</span>
+      </div>
+    </a>
+
+    <!-- 5 放弃考研 -->
+    <a class="write-card tilt-5 reveal d5" href="https://mp.weixin.qq.com/s/S3Xucu_7BBE6xa-LH0GmeA" target="_blank" rel="noopener">
+      <div class="write-img">
+        <img src="./assets/writing/head5.jpg" alt="放弃考研">
+      </div>
+      <div class="write-body">
+        <div class="write-name">考研前45天，我取消了报名</div>
+        <p class="write-desc">"我做出的哪一个选择要我按手印？"</p>
+        <span class="write-more">read more →</span>
+      </div>
+    </a>
+  </div>
+
+</section>
+
+<!-- ============= 5 · CONTACT ============= -->
+<section id="contact" class="section contact-section">
+  <svg class="doodle doodle-envelope" viewBox="0 0 80 60">
+    <rect x="6" y="10" width="68" height="44" rx="4" fill="#FFFBF0" stroke="#2B2419" stroke-width="2.5"/>
+    <path d="M6 14 L40 36 L74 14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="40" cy="46" r="5" fill="currentColor"/>
+  </svg>
+
+  <header class="section-header reveal">
+    <span class="section-number">— 05 / part five</span>
+    <h2 class="section-title"><em>let's</em> talk</h2>
+    <span class="section-zh">以下是我的联系方式</span>
+  </header>
+
+  <p class="contact-lead reveal d1">
+    感谢你看到这里
+    <strong>下次再聊～ ♡</strong>
+  </p>
+
+  <div class="contact-grid">
+    <div class="contact-card c1 reveal d2">
+      <div class="contact-icon">
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="4" y="7" width="24" height="18" rx="3"/>
+          <path d="M4 10 L16 19 L28 10"/>
+        </svg>
+      </div>
+      <div class="contact-label">email</div>
+      <div class="contact-value">caozeyuoye@163.com</div>
+    </div>
+    <div class="contact-card c2 reveal d3">
+      <div class="contact-icon">
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="currentColor">
+          <path d="M12.5 5C6.7 5 2 8.9 2 13.7c0 2.6 1.4 5 3.7 6.6l-.9 3 3.4-1.7c1.3.3 2.5.5 3.8.5h.5a7 7 0 0 1-.3-2c0-4.3 4.1-7.7 9.2-7.7h.8C21.4 8 17.4 5 12.5 5zm-3.8 5a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4zm7.3 0a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/>
+          <path d="M30 19.3c0-3.8-3.8-7-8.5-7s-8.5 3.2-8.5 7 3.8 7 8.5 7c1 0 2-.2 2.9-.4l2.7 1.4-.7-2.4a6.8 6.8 0 0 0 3.6-5.6zm-11.2-1.6a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm6 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+        </svg>
+      </div>
+      <div class="contact-label">wechat</div>
+      <div class="contact-value">C11zyu11</div>
+    </div>
+    <div class="contact-card c3 reveal d4">
+      <div class="contact-icon">
+        <svg viewBox="0 0 32 32" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M26 22v3.5c0 1.4-1.1 2.5-2.5 2.5C14 27.2 4.8 18 4 8.5 4 7.1 5.1 6 6.5 6H10c1.1 0 2 .7 2.3 1.7.3 1.3.8 2.6 1.4 3.8.4.8.2 1.7-.4 2.3l-1.5 1.5a20 20 0 0 0 7 7l1.5-1.5c.6-.6 1.5-.8 2.3-.4 1.2.6 2.5 1 3.8 1.4.9.3 1.6 1.2 1.6 2.2Z"/>
+        </svg>
+      </div>
+      <div class="contact-label">PHONE NUMBER</div>
+      <div class="contact-value">18373045179</div>
+    </div>
+  </div>
+
+  <!-- merged goodbye block -->
+  <div class="goodbye-block">
+    <svg class="doodle doodle-star-1" viewBox="0 0 80 80">
+      <path d="M40 4 L48 30 L74 32 L54 48 L62 72 L40 58 L18 72 L26 48 L6 32 L32 30 Z" fill="currentColor" stroke="#2B2419" stroke-width="3"/>
+    </svg>
+    <svg class="doodle doodle-star-2" viewBox="0 0 80 80">
+      <path d="M40 4 L48 30 L74 32 L54 48 L62 72 L40 58 L18 72 L26 48 L6 32 L32 30 Z" fill="currentColor" stroke="#2B2419" stroke-width="3"/>
+    </svg>
+    <svg class="doodle doodle-flower-1" viewBox="0 0 60 60">
+      <circle cx="30" cy="10" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="50" cy="30" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="30" cy="50" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="10" cy="30" r="9" fill="currentColor" stroke="#2B2419" stroke-width="2"/>
+      <circle cx="30" cy="30" r="6" fill="#FFCD3A" stroke="#2B2419" stroke-width="2"/>
+    </svg>
+    <svg class="doodle doodle-heart-1" viewBox="0 0 50 50">
+      <path d="M25 44 C -10 22, 10 -2, 25 14 C 40 -2, 60 22, 25 44 Z" fill="currentColor" stroke="#2B2419" stroke-width="2.5"/>
+    </svg>
+    <svg class="doodle doodle-squiggle-1" viewBox="0 0 140 30">
+      <path d="M4 15 Q 18 -5, 32 15 T 60 15 T 88 15 T 116 15 T 136 15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+
+    <p class="goodbye-eyebrow reveal">the end · but not really</p>
+    <h2 class="goodbye-title reveal d1"><em>bye</em>&nbsp;bye<span class="heart"> ♡</span></h2>
+    <div class="signature reveal d4">Cozy</div>
+  </div>
+
+</section>
+
+<script>
+/* ================================================================
+   JS
+   ================================================================ */
+(function(){
+
+  /* ---- reveal on scroll ---- */
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('in'));
+  }
+
+  /* ---- side nav active state ---- */
+  const sections = Array.from(document.querySelectorAll('section.section'));
+  const navLinks = Array.from(document.querySelectorAll('.side-nav a'));
+  if ('IntersectionObserver' in window) {
+    const navIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = e.target.id;
+          navLinks.forEach(a => {
+            a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+    sections.forEach(s => navIO.observe(s));
+  }
+
+  /* ---- carousel ---- */
+  const track = document.getElementById('carouselTrack');
+  const slides = track ? Array.from(track.children) : [];
+  const dotsWrap = document.getElementById('carouselDots');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  let idx = 0;
+
+  function renderDots() {
+    if (!dotsWrap) return;
+    dotsWrap.innerHTML = '';
+    slides.forEach((_, i) => {
+      const d = document.createElement('span');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => go(i));
+      dotsWrap.appendChild(d);
+    });
+  }
+  function go(i) {
+    if (!slides.length) return;
+    idx = (i + slides.length) % slides.length;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    Array.from(dotsWrap.children).forEach((d, j) => d.classList.toggle('active', j === idx));
+  }
+  if (slides.length) {
+    renderDots();
+    prevBtn && prevBtn.addEventListener('click', () => go(idx - 1));
+    nextBtn && nextBtn.addEventListener('click', () => go(idx + 1));
+
+    /* keyboard */
+    document.addEventListener('keydown', (e) => {
+      const carousel = document.getElementById('carousel');
+      if (!carousel) return;
+      const rect = carousel.getBoundingClientRect();
+      const visible = rect.top < window.innerHeight * 0.8 && rect.bottom > 0;
+      if (!visible) return;
+      if (e.key === 'ArrowLeft') go(idx - 1);
+      if (e.key === 'ArrowRight') go(idx + 1);
+    });
+
+    /* touch swipe */
+    let startX = null, deltaX = 0;
+    track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; deltaX = 0; }, {passive: true});
+    track.addEventListener('touchmove',  (e) => { if (startX !== null) deltaX = e.touches[0].clientX - startX; }, {passive: true});
+    track.addEventListener('touchend',   () => {
+      if (Math.abs(deltaX) > 50) go(idx + (deltaX < 0 ? 1 : -1));
+      startX = null; deltaX = 0;
+    });
+  }
+
+  /* ---- video player ---- */
+  const videoCard = document.getElementById('videoCard');
+  const videoEl   = document.getElementById('videoEl');
+  const playBtn   = document.getElementById('playBtn');
+  const videoSub  = document.getElementById('videoSub');
+
+  // When the real video loads metadata, flip the sub text & mark "ready"
+  let videoReady = false;
+  function markVideoReady() {
+    if (videoReady) return;
+    videoReady = true;
+    if (videoSub) videoSub.textContent = '点击播放 · play the video';
+  }
+  if (videoEl) {
+    videoEl.addEventListener('loadedmetadata', markVideoReady);
+    // In case metadata already loaded before this script ran
+    if (videoEl.readyState >= 1) markVideoReady();
+  }
+
+  if (playBtn && videoEl) {
+    playBtn.addEventListener('click', () => {
+      if (!videoReady) {
+        // try loading again in case the file was just added; silently ignore failures
+        try { videoEl.load(); } catch (e) {}
+      }
+      const playPromise = videoEl.play();
+      if (playPromise && typeof playPromise.then === 'function') {
+        playPromise
+          .then(() => { videoCard.classList.add('playing'); })
+          .catch(() => { /* sub text already says "coming soon" */ });
+      }
+    });
+  }
+
+  /* ---- cover parallax for polaroids (light) ---- */
+  const cover = document.getElementById('cover');
+  const polaroids = cover ? cover.querySelectorAll('.polaroid') : [];
+  if (cover && polaroids.length && window.matchMedia('(hover: hover)').matches) {
+    cover.addEventListener('mousemove', (e) => {
+      const rect = cover.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      polaroids.forEach((p, i) => {
+        const depth = (i + 1) * 6;
+        p.style.setProperty('--tx', `${x * depth}px`);
+        p.style.setProperty('--ty', `${y * depth}px`);
+        p.style.transform = `translate(${x * depth}px, ${y * depth}px) rotate(var(--r, 0deg))`;
+      });
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
