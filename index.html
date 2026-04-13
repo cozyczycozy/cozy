@@ -296,6 +296,17 @@ body::after {
   color: var(--ink-soft);
   margin-top: .3em;
 }
+.cover-ai-note {
+  font-family: var(--ff-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(14px, 1.15vw, 16px);
+  color: var(--ink-soft);
+  letter-spacing: .01em;
+  margin-top: 14px;
+  opacity: .78;
+}
+.cover-ai-note .heart { color: var(--pink-deep); font-style: normal; }
 
 .cover-tagline {
   font-family: var(--ff-display);
@@ -1455,6 +1466,7 @@ body::after {
       I'm <em>Cozy</em><span class="swash">,</span><br>
       <span class="take-seat">Take a Seat</span>
     </h1>
+    <p class="cover-ai-note reveal d3">p.s. — yes, this page was AI-coded too<span class="heart"> ♡</span></p>
   </div>
 
   <div class="scroll-hint reveal d4">
